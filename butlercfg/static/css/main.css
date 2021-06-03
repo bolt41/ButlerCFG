@@ -1,0 +1,210 @@
+ul.hr {
+  margin:0;
+  padding: 4px;
+}
+ul.hr li {
+  display: inline-block;
+  margin-right: 5px;
+/*  border: 1 px solid #000; */
+  padding: 3px;
+   }
+ul.hr li:hover {
+  background-color: #b3d1f2;
+}
+
+.radio-form {
+
+    justify-content: center;
+    margin: 30px 0;
+}
+.radio-form .radio-control {
+    width: 180px;
+    transition: all ease 250ms;
+}
+.radio-form .radio-control input {
+    display: none;
+}
+.radio-form .radio-control .radio-input {
+    background: #ffffff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    position: relative;
+    transition: all ease 250ms;
+    border: 4px solid #BFE2FF;
+}
+
+
+.radio-form .radio-control:hover .radio-input {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 6px 12px rgba(0,0,0,0.2);
+}
+.radio-form .radio-control .radio-input i {
+    display: block;
+    font-size: 70px;
+    color: #BFE2FF;
+    font-weight: bold;
+}
+.radio-form .radio-control .radio-input img {
+    width: 70px;
+}
+.radio-form .radio-control .radio-input span {
+    font-family: Tahoma, sans-serif;
+    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 16px;
+    color: #AAA;
+}
+.radio-form .radio-control input:checked + .radio-input span {
+    color: #444444;
+    opacity: 1;
+    transition: opacity ease 250ms;
+}
+
+
+.radio-form .radio-control input:checked + .radio-input:after {
+    top: 0;
+    right: 20px;
+    transform: translateY(-50%);
+    animation-name: animation;
+    animation-duration: 250ms;
+    background-color: #FFF;
+    font-size: 25px;
+    display: block;
+    position: absolute;
+    border: 5px solid #FFF;
+    padding-left: 2px;
+    content: "\f058";
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Brands';;
+    font-weight: bold;
+}
+
+
+
+.radio-form .radio-control input:checked + .radio-input {
+    border: 4px solid #337AB7;
+}
+.radio-form .radio-control input:checked + .radio-input:after,
+.radio-form .radio-control input:checked + .radio-input i {
+    color: #337AB7;
+}
+@keyframes animation {
+    0% {
+        transform: translateY(-50%) scale(0);
+    }
+    75% {
+        transform: translateY(-50%) scale(1.3);
+    }
+    100% {
+        transform: translateY(-50%) scale(1);
+    }
+}
+@media screen and (max-width: 768px) {
+    .radio-form {
+        display: block;
+    }
+    .radio-form .radio-control {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #d9d9d9;
+}
+
+#finish  {
+  background-color: #ffffff;
+  margin: 20px auto;
+  font-family: Raleway;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+#regForm {
+  background-color: #ffffff;
+  margin: 20px auto;
+  font-family: Raleway;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: #0688d4;
+  }
+
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}

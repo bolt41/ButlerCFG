@@ -1,0 +1,33 @@
+Подсчет суммы по полю с выборкой (Агрегатная функция)
+from django.db.models import Sum
+Templates.objects.filter(param__system__name='Освещение').aggregate(Sum('count'))
+
+***************
+
+
+    count_param = count_pod-4 # ввычисляем количество параметров в таблице
+    rows = 7
+    cols = 1
+    count = 1
+    print(itog)
+    for key in itog.keys():
+        count_room = (int(len(itog[key]) / count_param)) #получаем количество комнат
+        for i in range(count_room):
+            worksheet.write(rows, cols, count, format_table_text)
+            worksheet.write(rows, cols+1, key, format_table_text)
+            worksheet.write(rows, cols+2, itog[key][i][0], format_table_text)
+            rows += 1
+            count += 1
+        rows = 7
+        cols = 4
+
+        print(len(itog[key]))
+        for i in range(count_room):
+            for j in range(i,len(itog[key]), count_room):
+                print(itog[key][j])
+                worksheet.write(rows, cols, itog[key][j][1], format_table_text)
+                cols += 1
+            rows += 1
+            cols = 4
+        cols=1
+    # rows + 1 строка для итогового подсчета
