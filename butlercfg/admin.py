@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Floor, Levels, Rooms, Systems, Params, Templates, Vendors, Devices, Constant
 
+admin.site.site_header = 'Администрирование Butler'
 
 class ParamsAdmin(admin.ModelAdmin):
     list_display = ('name', 'system')

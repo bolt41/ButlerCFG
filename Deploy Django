@@ -1,0 +1,167 @@
+1. Накатываем debian 10 на сервак.
+2. Подключаемся к нему по ssh
+
+
+3. В Debian 10.3 нужно назначить текущему пользователю su:
+su -
+apt-get install sudo -y
+usermod -aG sudo yourusername
+su - username
+
+4. Добавляем пользователя:
+sudo adduser butler (пароль butler)
+
+5. Обновляем систему
+sudo apt update
+Если нужно добавить репы:
+sudo /etc/apt/sources.list
+
+вставляем:
+
+#
+# From https://wiki.debian.org/SourcesList
+#
+deb     http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+#
+deb     http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+#
+deb     http://security.debian.org/ buster/updates main contrib non-free
+deb-src http://security.debian.org/ buster/updates main contrib non-free
+#
+
+
+sudo apt update
+sudo apt list --upgradable
+
+6. Добавляем пользователя в sudo
+su -
+usermod -aG sudo butler
+su - username
+
+7. Проверяем есть ли у созданного пользователя эта группа:
+groups butler
+
+8. Переключаемся на пользователя butler
+su butler
+cd ~ 
+
+9. Устанавливаем пакеты:
+sudo apt install nginx git supervisor postgresql
+
+10. Создаем БД
+
+sudo -u postgres psql
+CREATE DATABASE butlerdb
+CREATE USER butler WITH PASSWORD 'butler';
+ALTER ROLE butler SET client_encoding TO 'utf8';
+ALTER ROLE butler SET default_transaction_isolation TO 'read committed';
+ALTER ROLE butler SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE butlerdb TO butler;
+
+11. Добавляем виртуальное окружение:
+sudo apt-get install python3-venv
+python3 -m venv venv
+source venv/bin/activate  
+
+12. Клонируем репозиторий с проектом
+git clone https://github.com/bolt41/ButlerCFG.git 
+
+13. Переходим в директорию и проверяем, если нет media то создаем:
+cd ButlerCFG
+mkdir media
+
+14. Устанавливаем зависимости:
+обновляем pip 
+pip install -U pip
+
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev
+sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+sudo apt-get install -y libncurses5-dev libncursesw5-dev xz-utils tk-dev
+
+15.  psycopg2 нужной версии нет в debian 10. Ставим отдельно
+pip install psycopg2-binary
+
+pip install -r req.txt
+
+16. Установка gunicorn
+pip install gunicorn
+
+17. Делаем миграции
+python manage.py migrate
+
+18. Добавляем в gunicorn:
+gunicorn ButlerCFG.wsgi:application --bind 192.168.1.32:8000
+
+19. Добавляем ip в разрешенные хосты
+
+20. Проверяем доступность web-сервиса (пока он без статических картинок)
+
+21. настройка nginx
+sudo nano /etc/nginx/sites-available/default
+Очищаем из него все что там есть и добавляем:
+
+server {
+    listen 80;
+    server_name 192.168.1.32; # здесь прописать или IP-адрес или доменное имя сервера
+    access_log  /var/log/nginx/example.log;
+
+    location /static/ {
+        root /home/butler/ButlerCFG;
+        expires 30d;
+    }
+
+    location /media/ {
+        root /home/butler/ButlerCFG;
+        expires 30d;
+    }
+
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+
+На всякий случай собираем всю статику в одно место:
+python manage.py collectstatic 
+
+
+
+Перезапускаем nginx: 
+sudo service nginx restart
+
+22. Настройка supervisor. Создаем ссылку на конфиг файл проекта
+cd /etc/supervisor/conf.d
+sudo ln /home/butler/ButlerCFG/config/butler.conf
+
+23. Активируем супервизор
+  
+sudo update-rc.d supervisor enable
+sudo service supervisor start
+sudo supervisorctl reread
+sudo supervisorctl update
+
+Проверяем статус:
+sudo supervisorctl status
+
+24. Создаем суперпользователя:
+
+python manage.py createsuperuser
+
+25. Делаем дамп БД на машине где разработка была:
+
+sudo pg_dump -h 127.0.0.1 -U postgres butlerdb > /tmp/butler.dump
+
+26. Переносим этот дамп на сервер и восстанавливаемся с него.
+
+
+
+
+
+
+

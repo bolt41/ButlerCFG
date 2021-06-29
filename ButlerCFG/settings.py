@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'butlercfg.apps.ButlercfgConfig',
+    'butlersurv.apps.ButlersurvConfig',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGOUT_REDIRECT_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = 'index'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

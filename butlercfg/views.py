@@ -6,6 +6,7 @@ from .models import *
 from collections import Counter
 import xlsxwriter
 from math import ceil
+from django.contrib.auth.decorators import login_required
 
 
 def make_pivot_table(workbook, name, data_cost, sys, lev):  # функция заполнения листа сводной
@@ -15,42 +16,42 @@ def make_pivot_table(workbook, name, data_cost, sys, lev):  # функция з�
     proekt_max = Constant.objects.get(name='proekt_standart_max')
 
     # денежный формат
-    format_money = workbook.add_format({'font_size': '10', 'num_format': '#,##0"₽"'})
+    format_money = workbook.add_format({'font_size': '16', 'num_format': '#,##0"₽"'})
 
     # формат для заголовка
-    format_title = workbook.add_format({'font_color': 'white', 'font_size': '12', 'bg_color': '#4679fa'})
+    format_title = workbook.add_format({'font_color': 'white', 'font_size': '16', 'bg_color': '#4679fa'})
 
-    format_info = workbook.add_format({'font_color': 'white', 'font_size': '8', 'bg_color': '#4679fa'})
+    format_info = workbook.add_format({'font_color': 'white', 'font_size': '16', 'bg_color': '#4679fa'})
 
     # формат для шапки таблицы
     format_header = workbook.add_format(
-        {'font_color': 'white', 'font_size': '10', 'bg_color': '#4679fa', 'align': 'center'})
+        {'font_color': 'white', 'font_size': '16', 'bg_color': '#4679fa', 'align': 'center'})
 
     # формат для первой строки таблицы
-    format_one_string = workbook.add_format({'font_size': '10', 'bg_color': '#f5f0f0'})
+    format_one_string = workbook.add_format({'font_size': '16', 'bg_color': '#f5f0f0'})
 
     # формат для основного текста
-    format_main_font = workbook.add_format({'font_size': '10'})
+    format_main_font = workbook.add_format({'font_size': '16'})
 
     # формат с границей
-    format_with_border = workbook.add_format({'top': 6, 'bold': 'True', 'font_size': '10'})
+    format_with_border = workbook.add_format({'top': 6, 'bold': 'True', 'font_size': '16'})
 
     # формат с границей и денежным форматом
     format_with_border_money = workbook.add_format(
-        {'top': 6, 'bold': 'True', 'font_size': '10', 'num_format': '#,##0"₽"'})
+        {'top': 6, 'bold': 'True', 'font_size': '16', 'num_format': '#,##0"₽"'})
 
     # Создаем лист для сводной таблицы
     worksheet = workbook.add_worksheet('Свод')
     worksheet.set_tab_color('green')
 
     # Формируем заголовок листа и ширину ячеек
-    worksheet.set_row(0, 20)
+    worksheet.set_default_row(20)
     worksheet.set_column('A:A', 3)
     worksheet.set_column('B:B', 6)
-    worksheet.set_column('C:C', 45)
-    worksheet.set_column('D:D', 15)
-    worksheet.set_column('E:E', 15)
-    worksheet.set_column('F:F', 15)
+    worksheet.set_column('C:C', 60)
+    worksheet.set_column('D:D', 20)
+    worksheet.set_column('E:E', 20)
+    worksheet.set_column('F:F', 20)
     worksheet.write('A1', '', format_title)
     worksheet.write('A2', '', format_title)
     worksheet.merge_range('B1:D1', 'СВОДНАЯ ТАБЛИЦА', format_title)
@@ -140,24 +141,25 @@ def make_table_system(workbook, house, sys, choice_temp, all_param):  # функ
 
     # формат для заголовка
     format_title = workbook.add_format({'font_color': 'white', 'font_size': '12', 'bg_color': '#4679fa'})
-    format_title_table = workbook.add_format({'font_size': '6', 'align': 'center', 'valign': 'vcenter', 'bold': True})
-    format_title_table2 = workbook.add_format({'font_size': '6', 'align': 'center', 'rotation': '90'})
-    format_table_text = workbook.add_format({'font_size': '6', 'align': 'center', 'valign': 'vcenter'})
+    format_title_table = workbook.add_format({'font_size': '11', 'align': 'center', 'valign': 'vcenter', 'bold': True})
+    format_title_table2 = workbook.add_format({'font_size': '12', 'align': 'center', 'rotation': '90'})
+    format_table_text = workbook.add_format({'font_size': '12', 'align': 'center', 'valign': 'vcenter'})
 
     # Формируем заголовок листа и ширину ячеек
     worksheet.set_row(0, 20)
+    worksheet.set_row(4, 60)
     worksheet.write('A1', '', format_title)
     worksheet.write('A2', '', format_title)
     worksheet.merge_range('B1:Y1', 'ВЕДОМОСТЬ', format_title)
     worksheet.merge_range('B2:Y2', 'элементов подсистем автоматизации', format_title)
 
     worksheet.set_column('A:A', 3)
-    worksheet.set_column('B:C', 6)
+    worksheet.set_column('B:C', 8)
     worksheet.set_column('D:D', 25)
-    worksheet.set_column('E:AK', 3)
+    worksheet.set_column('E:AK', 6)
 
     # формат строки итогов
-    format_with_border = workbook.add_format({'top': 6, 'bold': 'True', 'font_size': '10'})
+    format_with_border = workbook.add_format({'top': 6, 'align': 'center', 'bold': 'True', 'font_size': '12'})
 
     ###### Шапка таблицы
     rows = 3
@@ -448,7 +450,7 @@ def find_light(level, param1, sys):  # формируем список обор�
 
     return dict_level, dict_cost
 
-
+@login_required
 def index(request):
     if request.method == 'POST':
         sys = request.POST.getlist('system')  # получаем список подсистем
