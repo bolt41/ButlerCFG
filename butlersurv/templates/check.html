@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Опросный лист
+{% endblock %}
+{% block script %}
+
+{% endblock %}
+{% block content %}
+<form id="regForm" method="post">
+    {% csrf_token %}
+{% for key,value in question.items %}
+   <h1> {{ key }} </h1><br>
+    {% for sys, val in value.items %}
+       <h2>{{ sys }} </h2> <br>
+        {% for quest,ans in val.items %}
+            {% if ans.1|length > 0 %}
+                <h4>{{ ans.0 }} </h4> <br>
+            {% for a in ans.1 %}
+              <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="{{ quest }}" value="{{ a }}" id={{ a }}>
+                  <label class="form-check-label" for={{ a }}>
+                  {{ a }}
+                  </label>
+              </div>
+                <br>
+            {% endfor %}
+            {% else %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="{{ quest }}" value="" id={{ quest }}>
+                  <label class="form-check-label" for={{ quest }}>
+                  <h4>{{ ans.0 }}</h4>
+                  </label>
+              </div>
+            {% endif %}
+
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+<input type="submit">
+</form>
+{% endblock %}
+

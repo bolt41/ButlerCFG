@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Опросный лист
+{% endblock %}
+{% block script %}
+
+{% endblock %}
+{% block content %}
+<div id="finish">
+    <p>Опросный лист <b>"{{ file }}"</b> успешно сформирован. Вы можете скачать его по ссылке ниже, либо вернуться <a href="javascript:history.go(-1)"> на предыдущую страницу </a> </p>
+<div align="center">
+<a href="/media/surv/{{ file }}">
+    <i class="fas fa-file-download fa-10x"></i>
+    </a></div></div>
+{% endblock %}

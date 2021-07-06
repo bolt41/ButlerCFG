@@ -1,0 +1,407 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.7 (Ubuntu 11.7-0ubuntu0.19.10.1)
+-- Dumped by pg_dump version 11.7 (Ubuntu 11.7-0ubuntu0.19.10.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: butlersurv_answersurv; Type: TABLE; Schema: public; Owner: butler
+--
+
+CREATE TABLE public.butlersurv_answersurv (
+    id bigint NOT NULL,
+    variable character varying(600) NOT NULL,
+    is_use boolean NOT NULL,
+    question_id bigint
+);
+
+
+ALTER TABLE public.butlersurv_answersurv OWNER TO butler;
+
+--
+-- Name: butlersurv_answersurv_id_seq; Type: SEQUENCE; Schema: public; Owner: butler
+--
+
+CREATE SEQUENCE public.butlersurv_answersurv_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.butlersurv_answersurv_id_seq OWNER TO butler;
+
+--
+-- Name: butlersurv_answersurv_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: butler
+--
+
+ALTER SEQUENCE public.butlersurv_answersurv_id_seq OWNED BY public.butlersurv_answersurv.id;
+
+
+--
+-- Name: butlersurv_questionsurv; Type: TABLE; Schema: public; Owner: butler
+--
+
+CREATE TABLE public.butlersurv_questionsurv (
+    id bigint NOT NULL,
+    question character varying(600) NOT NULL,
+    is_use boolean NOT NULL,
+    partition_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.butlersurv_questionsurv OWNER TO butler;
+
+--
+-- Name: butlersurv_paramsurv_id_seq; Type: SEQUENCE; Schema: public; Owner: butler
+--
+
+CREATE SEQUENCE public.butlersurv_paramsurv_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.butlersurv_paramsurv_id_seq OWNER TO butler;
+
+--
+-- Name: butlersurv_paramsurv_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: butler
+--
+
+ALTER SEQUENCE public.butlersurv_paramsurv_id_seq OWNED BY public.butlersurv_questionsurv.id;
+
+
+--
+-- Name: butlersurv_partitionsurv; Type: TABLE; Schema: public; Owner: butler
+--
+
+CREATE TABLE public.butlersurv_partitionsurv (
+    id bigint NOT NULL,
+    name character varying(100) NOT NULL,
+    is_use boolean NOT NULL,
+    type_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.butlersurv_partitionsurv OWNER TO butler;
+
+--
+-- Name: butlersurv_partitionsurv_id_seq; Type: SEQUENCE; Schema: public; Owner: butler
+--
+
+CREATE SEQUENCE public.butlersurv_partitionsurv_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.butlersurv_partitionsurv_id_seq OWNER TO butler;
+
+--
+-- Name: butlersurv_partitionsurv_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: butler
+--
+
+ALTER SEQUENCE public.butlersurv_partitionsurv_id_seq OWNED BY public.butlersurv_partitionsurv.id;
+
+
+--
+-- Name: butlersurv_systemsurv; Type: TABLE; Schema: public; Owner: butler
+--
+
+CREATE TABLE public.butlersurv_systemsurv (
+    id bigint NOT NULL,
+    name character varying(100) NOT NULL,
+    is_use boolean NOT NULL
+);
+
+
+ALTER TABLE public.butlersurv_systemsurv OWNER TO butler;
+
+--
+-- Name: butlersurv_systemsurv_id_seq; Type: SEQUENCE; Schema: public; Owner: butler
+--
+
+CREATE SEQUENCE public.butlersurv_systemsurv_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.butlersurv_systemsurv_id_seq OWNER TO butler;
+
+--
+-- Name: butlersurv_systemsurv_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: butler
+--
+
+ALTER SEQUENCE public.butlersurv_systemsurv_id_seq OWNED BY public.butlersurv_systemsurv.id;
+
+
+--
+-- Name: butlersurv_answersurv id; Type: DEFAULT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_answersurv ALTER COLUMN id SET DEFAULT nextval('public.butlersurv_answersurv_id_seq'::regclass);
+
+
+--
+-- Name: butlersurv_partitionsurv id; Type: DEFAULT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_partitionsurv ALTER COLUMN id SET DEFAULT nextval('public.butlersurv_partitionsurv_id_seq'::regclass);
+
+
+--
+-- Name: butlersurv_questionsurv id; Type: DEFAULT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_questionsurv ALTER COLUMN id SET DEFAULT nextval('public.butlersurv_paramsurv_id_seq'::regclass);
+
+
+--
+-- Name: butlersurv_systemsurv id; Type: DEFAULT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_systemsurv ALTER COLUMN id SET DEFAULT nextval('public.butlersurv_systemsurv_id_seq'::regclass);
+
+
+--
+-- Data for Name: butlersurv_answersurv; Type: TABLE DATA; Schema: public; Owner: butler
+--
+
+COPY public.butlersurv_answersurv (id, variable, is_use, question_id) FROM stdin;
+1	группы вкл/выкл	t	2
+2	диммируемые группы	t	2
+3	RGB-регулирование ("цветовые сценарии")	t	2
+4	в проходных зонах/коридорах	t	3
+5	у лестниц (включение подсветки ступеней)	t	3
+6	у кроватей (функция "ночной след")	t	3
+7	в гардеробах	t	3
+8	в санузлах	t	3
+9	на террасах	t	3
+10	включение ландшафтной подсветки дома	t	4
+11	включение подсветки фасадов	t	4
+12	световой расчет по помещениям, включая технический свет	t	5
+13	проект ландшафтного освещения (наличие дендроплана)	t	5
+14	ведомость осветительных приборов	t	5
+15	гладильные/постирочные	t	6
+16	ТВ-группы	t	6
+17	кухни	t	6
+18	особые "зимние" группы: гирлянды/елка/фасад	t	6
+19	прочие помещения/группы	t	6
+20	учет потребления дома в целом	t	7
+21	раздельный учет потребления по подсистемам	t	7
+22	общие показания счетчика ввода	t	7
+23	по фазам	t	7
+24	по подсистемам (освещение/климат/бассейн и т.п)	t	7
+26	генератор дизельный	t	9
+27	генератор газовый	t	9
+28	источник бесперебойного питания (без "морганий")	t	9
+29	данные по потребителям	t	10
+30	распределение по группам питания	t	10
+\.
+
+
+--
+-- Data for Name: butlersurv_partitionsurv; Type: TABLE DATA; Schema: public; Owner: butler
+--
+
+COPY public.butlersurv_partitionsurv (id, name, is_use, type_id) FROM stdin;
+2	Управление розетками и нагрузками	t	1
+1	Управление освещением	t	1
+3	Управление механизмами	t	1
+4	Управление климатом	t	1
+5	Сценарные выключатели	t	1
+6	Навигация и управление	t	1
+7	Аудио оформление	t	2
+8	Домашний кинотеатр	t	2
+9	Видеомультирум ("Единый пульт")	t	2
+10	Телевидение	t	2
+11	Сенсорные панели	t	2
+12	Локальная сеть, Wi-Fi, GSM-усиление	t	2
+13	Телефония-ИНТЕРКОМ (внутренняя связь)	t	2
+14	Видеонаблюдение	t	3
+15	Видеодомофония	t	3
+16	Система мониторинга	t	3
+17	Центральный диспетчерский пульт (SCADA-система)	t	3
+18	Система охранной сигнализации	t	3
+19	Система пожарной сигнализации	t	3
+20	Система активного пожаротушения	t	3
+\.
+
+
+--
+-- Data for Name: butlersurv_questionsurv; Type: TABLE DATA; Schema: public; Owner: butler
+--
+
+COPY public.butlersurv_questionsurv (id, question, is_use, partition_id) FROM stdin;
+2	Тип управления светильниками	t	1
+3	Датчики движения	t	1
+4	Датчики освещенности	t	1
+5	Наличие исходных данных для детального проектирования	t	1
+6	Выборочное отключение розеточных групп	t	2
+7	Учет, оптимизация потребление энергоресурсов с возможностью перераспределения	t	2
+8	Система выравнивание потенциалов (отсутствие "статики" в ванных и т.п.)	t	2
+9	Система аварийного и бесперебойного элетропитания	t	2
+10	Наличие исходных данных для детального проектирования	t	2
+\.
+
+
+--
+-- Data for Name: butlersurv_systemsurv; Type: TABLE DATA; Schema: public; Owner: butler
+--
+
+COPY public.butlersurv_systemsurv (id, name, is_use) FROM stdin;
+1	Базовые подсистемы автоматизации	t
+2	Слаботочные подсистемы и системы развлечений	t
+3	Подсистемы безопасности и мониторинга	t
+\.
+
+
+--
+-- Name: butlersurv_answersurv_id_seq; Type: SEQUENCE SET; Schema: public; Owner: butler
+--
+
+SELECT pg_catalog.setval('public.butlersurv_answersurv_id_seq', 30, true);
+
+
+--
+-- Name: butlersurv_paramsurv_id_seq; Type: SEQUENCE SET; Schema: public; Owner: butler
+--
+
+SELECT pg_catalog.setval('public.butlersurv_paramsurv_id_seq', 10, true);
+
+
+--
+-- Name: butlersurv_partitionsurv_id_seq; Type: SEQUENCE SET; Schema: public; Owner: butler
+--
+
+SELECT pg_catalog.setval('public.butlersurv_partitionsurv_id_seq', 20, true);
+
+
+--
+-- Name: butlersurv_systemsurv_id_seq; Type: SEQUENCE SET; Schema: public; Owner: butler
+--
+
+SELECT pg_catalog.setval('public.butlersurv_systemsurv_id_seq', 3, true);
+
+
+--
+-- Name: butlersurv_answersurv butlersurv_answersurv_pkey; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_answersurv
+    ADD CONSTRAINT butlersurv_answersurv_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: butlersurv_questionsurv butlersurv_paramsurv_pkey; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_questionsurv
+    ADD CONSTRAINT butlersurv_paramsurv_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: butlersurv_partitionsurv butlersurv_partitionsurv_name_c946c13c_uniq; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_partitionsurv
+    ADD CONSTRAINT butlersurv_partitionsurv_name_c946c13c_uniq UNIQUE (name);
+
+
+--
+-- Name: butlersurv_partitionsurv butlersurv_partitionsurv_pkey; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_partitionsurv
+    ADD CONSTRAINT butlersurv_partitionsurv_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: butlersurv_systemsurv butlersurv_systemsurv_name_73275227_uniq; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_systemsurv
+    ADD CONSTRAINT butlersurv_systemsurv_name_73275227_uniq UNIQUE (name);
+
+
+--
+-- Name: butlersurv_systemsurv butlersurv_systemsurv_pkey; Type: CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_systemsurv
+    ADD CONSTRAINT butlersurv_systemsurv_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: butlersurv_answersurv_param_id_3f6aafec; Type: INDEX; Schema: public; Owner: butler
+--
+
+CREATE INDEX butlersurv_answersurv_param_id_3f6aafec ON public.butlersurv_answersurv USING btree (question_id);
+
+
+--
+-- Name: butlersurv_paramsurv_partition_id_dd51936b; Type: INDEX; Schema: public; Owner: butler
+--
+
+CREATE INDEX butlersurv_paramsurv_partition_id_dd51936b ON public.butlersurv_questionsurv USING btree (partition_id);
+
+
+--
+-- Name: butlersurv_partitionsurv_type_id_ad05331b; Type: INDEX; Schema: public; Owner: butler
+--
+
+CREATE INDEX butlersurv_partitionsurv_type_id_ad05331b ON public.butlersurv_partitionsurv USING btree (type_id);
+
+
+--
+-- Name: butlersurv_answersurv butlersurv_answersur_question_id_2c86ef4a_fk_butlersur; Type: FK CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_answersurv
+    ADD CONSTRAINT butlersurv_answersur_question_id_2c86ef4a_fk_butlersur FOREIGN KEY (question_id) REFERENCES public.butlersurv_questionsurv(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: butlersurv_questionsurv butlersurv_paramsurv_partition_id_dd51936b_fk_butlersur; Type: FK CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_questionsurv
+    ADD CONSTRAINT butlersurv_paramsurv_partition_id_dd51936b_fk_butlersur FOREIGN KEY (partition_id) REFERENCES public.butlersurv_partitionsurv(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: butlersurv_partitionsurv butlersurv_partition_type_id_ad05331b_fk_butlersur; Type: FK CONSTRAINT; Schema: public; Owner: butler
+--
+
+ALTER TABLE ONLY public.butlersurv_partitionsurv
+    ADD CONSTRAINT butlersurv_partition_type_id_ad05331b_fk_butlersur FOREIGN KEY (type_id) REFERENCES public.butlersurv_systemsurv(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
