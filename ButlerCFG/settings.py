@@ -87,7 +87,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'main'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

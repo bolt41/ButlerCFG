@@ -145,25 +145,13 @@
             dive.appendChild(dive2);
         }
     }
-
+window.onload=gen_checkbox;
 </script>
 {% endblock %}
 {% block content %}
-<body onload="return start()">
-<div align="center">
-    <img src={% static "/img/logo_horizonta.svg" %}>
-</div>
 
 <form id="regForm" method="post">
-    {% csrf_token %}
-    <ul class="nav justify-content-end">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/admin">Админка</a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'logout' %}">Log out</a>
-        </li>
-    </ul>
+    {% csrf_token %
     <h1>Конфигуратор:</h1>
     <div class="tab">
         <h2>Шаг 1: </h2>
@@ -304,5 +292,4 @@
     }
 
 </script>
-</body>
 {% endblock %}

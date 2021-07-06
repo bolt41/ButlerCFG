@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,40 @@
 </title>
     {% block script %}{% endblock %}
 </head>
+<body>
+
+
+
+
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Админка</a>
+  </li>
+{% if request.user.is_authenticated %}
+   <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'main' %}">На главную</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+  </li>
+
+{% endif %}
+
+
+
+
+</ul>
+<div align="center">
+    <img src={% static "/img/logo_horizonta.svg" %}>
+</div>
+
+
+
+
+
 {% block content %}
+
 {% endblock %}
 
 

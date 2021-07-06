@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from butlersurv.views import index
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('butlercfg.urls')),
+    path('', index, name='main'),
+    path('calc/', include('butlercfg.urls')),
+    path('check/', include('butlersurv.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 

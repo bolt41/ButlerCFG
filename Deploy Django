@@ -160,8 +160,20 @@ sudo pg_dump -h 127.0.0.1 -U postgres butlerdb > /tmp/butler.dump
 26. Переносим этот дамп на сервер и восстанавливаемся с него.
 
 
+Вносим изменения в продакшн:
+
+Активируем виртуальное окружение
+git stash save --keep-index
+git pull
+После этого делаем миграции и проверяем
 
 
+Дамп опрделенных таблиц:
+sudo pg_dump -t 'butlersurv*' -h 127.0.0.1 -U postgres butlerdb > /tmp/butlersurv.dump
 
+Копируем данные на сервер:
+sudo scp -P 45683 butlersurv.dump  butler@37.29.124.94:/home/butler
+
+На сервере: psql butlerdb < butlersurv.dump
 
 
